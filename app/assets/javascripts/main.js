@@ -1,35 +1,33 @@
 function makeGif() {
-	if ($('#gifModal').length) {
-		randomGif.init();
-		$('.make-tooltip').tooltip();
-	}
+  if ($('#gifModal').length) {
+  randomGif.init();
+  $('.make-tooltip').tooltip();
+  }
+}
+
+function addTabActive() {
+  $('.group-tab a:first').addClass('active')
 }
 
 $(document).on('page:load', makeGif);
+$(document).on('page:load', addTabActive);
 
 $(document).ready(function() {
 
-	function removeAlert() {
-		$('.alert').addClass('fade-out');
-	}
-	window.setTimeout(removeAlert, 8000);
+  function removeAlert() {
+  $('.alert').addClass('fade-out');
+  }
+  window.setTimeout(removeAlert, 8000);
 
-	makeGif();
+  makeGif();
 
-	// ==> Tabs (see groups#show)
-	// 1. Hide all tabs except first one when page loads
-	// $(".tab").addClass('hidden');
-	// $(".tab:first").show();
-	//
-	// // 2. When tab link is clicked
-	// $('.group-tab a').click(function(e){
-	//   e.preventDefault;
-	//   // 2.1 Change tab link status to "active"
-	//   $('.group-tab a').removeClass('active');
-	//   $(this).addClass('active');
-	//   // 2.2 Show tab corresponding to the link
-	//   $('.tab').hide();
-	//   $($(this).attr('href')).show();
-	// });
+  // ==> Tabs (see groups#show)
+  addTabActive();
+  $('.group-tab a').click(function(e){
+    $('.group-tab a').removeClass('active');
+    $(this).addClass('active');
+    $('.tab.active').removeClass('active');
+    $($(this).attr('href')).addClass('active');
+  });
 
 });

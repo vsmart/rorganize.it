@@ -81,46 +81,43 @@
       .group-join-box
         = render 'join'
 
-    // TODO: tabbed content, see redesign-main.js
-    -# %ul.group-tabs
-    -#   - if @group.learning_resources?
-    -#     %li.group-tab
-    -#       %a{:title => 'Resources', :href => '#resources', class: 'active'} Learning Resources
-    -#   - if @topic.group
-    -#     %li.group-tab
-    -#       %a{:title => 'Topics', :href => '#topics'} Topics
-    -#   %li.group-tab
-    -#     %a{:title => 'Members', :href => '#members'} Members
+    %ul.group-tabs
+      - if @group.learning_resources?
+        %li.group-tab
+          %a{:title => 'Resources', :href => '#resources'} Learning Resources
+      - if @topic.group
+        %li.group-tab
+          %a{:title => 'Topics', :href => '#topics'} Topics
+      %li.group-tab
+        %a{:title => 'Members', :href => '#members'} Members
 
-    -# TODO: Once tabs are working, remove h3 and make group-tabs available again.
     - if @group.learning_resources?
-      #resources.tab
-        %h2 Learning resources
+      #resources.tab.active
         %p
           %strong Suggested learning resources:
           = markdown(@group.learning_resources)
     - if @group.topics.any? || show_member_buttons?(current_person, @group)
       #topics.tab
-        %h2 Topics
         %p
           = link_to 'Topics this group talks about', group_topics_path(@group.id)
     #members.tab
-      %h2 Members of #{@group.name}
-      %h3 Students
-      %p
-        This group currently has #{pluralize @group.students.length, "student"}.
-      %ul.list--people
-        - @group.students.each do |student|
-          %li
-            = link_to student.first_name, person_path(student), class: 'list--people-name'
-            - if admin?
-              = render partial: 'remove_from_group', locals: { object: student, group: @group }
-      %h3 Coaches
-      %p
-        This group currently has #{pluralize @group.coaches.length, "coach"}.
-      %ul.list--people
-        - @group.coaches.each do |coach|
-          %li
-            = link_to coach.first_name, person_path(coach), class: 'list--people-name'
-            - if admin?
-              = render partial: 'remove_from_group', locals: { object: coach, group: @group }
+      .member-students
+        %h3 Students
+        %p
+          This group currently has #{pluralize @group.students.length, "student"}.
+        %ul.list--people
+          - @group.students.each do |student|
+            %li
+              = link_to student.first_name, person_path(student), class: 'list--people-name'
+              - if admin?
+                = render partial: 'remove_from_group', locals: { object: student, group: @group }
+      .member-coaches
+        %h3 Coaches
+        %p
+          This group currently has #{pluralize @group.coaches.length, "coach"}.
+        %ul.list--people
+          - @group.coaches.each do |coach|
+            %li
+              = link_to coach.first_name, person_path(coach), class: 'list--people-name'
+              - if admin?
+                = render partial: 'remove_from_group', locals: { object: coach, group: @group }
