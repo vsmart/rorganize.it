@@ -7,6 +7,12 @@ function makeGif() {
 
 function addTabActive() {
   $('.group-tab a:first').addClass('active')
+  $('.group-tab a').click(function(e){
+    $('.group-tab a').removeClass('active');
+    $(this).addClass('active');
+    $('.tab.active').removeClass('active');
+    $($(this).attr('href')).addClass('active');
+  });
 }
 
 $(document).on('page:load', makeGif);
@@ -23,11 +29,6 @@ $(document).ready(function() {
 
   // ==> Tabs (see groups#show)
   addTabActive();
-  $('.group-tab a').click(function(e){
-    $('.group-tab a').removeClass('active');
-    $(this).addClass('active');
-    $('.tab.active').removeClass('active');
-    $($(this).attr('href')).addClass('active');
-  });
+
 
 });

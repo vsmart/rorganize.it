@@ -85,7 +85,7 @@
       - if @group.learning_resources?
         %li.group-tab
           %a{:title => 'Resources', :href => '#resources'} Learning Resources
-      - if @topic.group
+      - if @group.topics.any?
         %li.group-tab
           %a{:title => 'Topics', :href => '#topics'} Topics
       %li.group-tab
@@ -96,7 +96,7 @@
         %p
           %strong Suggested learning resources:
           = markdown(@group.learning_resources)
-    - if @group.topics.any? || show_member_buttons?(current_person, @group)
+    - if show_member_buttons?(current_person, @group) || @group.topics.any?
       #topics.tab
         %p
           = link_to 'Topics this group talks about', group_topics_path(@group.id)
