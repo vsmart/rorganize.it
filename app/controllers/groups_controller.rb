@@ -24,9 +24,11 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     if @group.save
       if @group.join_as_coach == '1'
-        current_person.join!(@group, 'CoachMembership')
+        current_person.join!(@group, 'CoachMembership', true)
+      else
+        current_person.join!(@group, 'StudentMembership', true)
       end
-      redirect_to group_path(@group), notice: 'Group was successfully created. This calls for cake!'
+      redirect_to group_path(@group), notice: 'Group was successfully created. You are the admin now. This calls for cake!'
     else
       render action: 'new'
     end

@@ -105,7 +105,7 @@ class Person < ActiveRecord::Base
     full_name
   end
 
-  def join!(group, type = 'StudentMembership')
+  def join!(group, type = 'StudentMembership', admin = false)
     memberships.create!(group_id: group.id, type: type)
   end
 
